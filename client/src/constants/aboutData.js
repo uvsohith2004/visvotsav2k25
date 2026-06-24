@@ -7,11 +7,11 @@ import vicePrincipal2 from "../assets/vice-principal-2.jpeg";
 import ad from "../assets/ad.jpeg";
 
 const aboutData = {
-  title: "About Visvotsav",
+  title: "About Graduation Day",
   programs:"10+ Programs",
   students:"10,000+ Students",
   description:
-    "Visvotsav is a National Level Technical symposium conducted by the PBR Visvodaya Institute of Technology and Science (Autonomous). In this event we conduct some Technical events for the students and finalize the winners. The winners will receive the respected cash prize, a certificate of excellence along with a momento In this Visvotsav everyone can participate without the branch differentiation",
+    "Graduation Day is a National Level Technical symposium conducted by the PBR Visvodaya Institute of Technology and Science (Autonomous). In this event we conduct some Technical events for the students and finalize the winners. The winners will receive the respected cash prize, a certificate of excellence along with a momento In this Graduation Day everyone can participate without the branch differentiation",
   collegeName: "PBRVITS Autonomous",
   imageTitle: "Campus Excellence",
   imageSubtitle: "Where innovation meets tradition",

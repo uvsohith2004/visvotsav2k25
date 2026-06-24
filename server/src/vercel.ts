@@ -16,7 +16,7 @@ async function bootstrap() {
   app.getHttpAdapter().getInstance().set('trust proxy', 1);
   app.enableCors({
     origin: [
-      'https://visvotsav-teal.vercel.app',
+      'https://graduation-day-teal.vercel.app',
       'http://localhost:3000',
       'http://localhost:3001',
     ],

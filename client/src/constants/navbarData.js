@@ -1,5 +1,5 @@
 export const navbar={
-  title:'Visvotsav',
+  title:'Graduation Day',
   year: new Date().getFullYear(),
   links: [
     { name: 'Home', path: 'home' },
@@ -8,5 +8,5 @@ export const navbar={
     { name: 'Pricing', path: 'pricing' },
     { name: 'Contact', path: 'contact' },
   ],
-  scrollMessage:   " Sliver JUBILEE Celebration  - VISVOTSAV 2024 - A State Level Techno Cultural and Sports Festival 🎉"
+  scrollMessage:   " Sliver JUBILEE Celebration  - Graduation Day 2024 - A State Level Techno Cultural and Sports Festival 🎉"
 }

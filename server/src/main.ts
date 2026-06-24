@@ -18,7 +18,7 @@ async function bootstrap() {
   app.enableCors({
     origin: (origin, callback) => {
       const allowedOrigins = [
-        'https://visvotsav-teal.vercel.app',
+        'https://graduation-day-teal.vercel.app',
         'http://localhost:3000',
         'http://localhost:3001',
       ];
@@ -37,9 +37,9 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
-    .setTitle('Visvotsav Fest API')
+    .setTitle('Graduation Day Fest API')
     .setDescription(
-      'API documentation for the Visvotsav college fest registration system.',
+      'API documentation for the Graduation Day college fest registration system.',
     )
     .setVersion('1.0')
     .addTag('Registrations')

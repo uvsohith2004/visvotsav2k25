@@ -27,7 +27,7 @@ export class EmailService {
     const recipients = this.configService.getRecipients();
 
     const mailOptions = {
-      from: `"Visvotsav" <${this.configService.getEmail()}>`,
+      from: `"Graduation Day" <${this.configService.getEmail()}>`,
       to: recipients,
       subject: `🚀 New Message from ${data.name}`,
       html: htmlContent,

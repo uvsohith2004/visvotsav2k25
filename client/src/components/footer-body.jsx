@@ -144,7 +144,7 @@ const FooterBody = () => {
                 </span>
               </p>
               <p className="text-muted-foreground text-xs sm:text-sm">
-                © 2025 PBR VITS. All rights reserved. | Designed for VISVOTSAV
+                © 2025 PBR VITS. All rights reserved. | Designed for Graduation Day
                 2025
               </p>
             </div>

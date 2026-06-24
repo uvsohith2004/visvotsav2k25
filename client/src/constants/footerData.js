@@ -2,7 +2,7 @@ export const footerData = {
   firstTitle: "Contacts",
   secondTitle: "Have a Question?",
   secondTitleMobileNumber:'+91 9246428707',
-  secondTitleEmail:'visvotsav.pbrvits@visvodayata.ac.in',
+  secondTitleEmail:'graduationday.pbrvits@visvodayata.ac.in',
   firstSubTitle: "Patrons",
   coPatronsSubTitle: "Co-Patrons",
   thirdTitle: "Loaction",
