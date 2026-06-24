@@ -30,3 +30,7 @@ export const postSubmit = async (data) => {
 
   return await axiosInstance.post("/api/form-submit", payload);
 };
+
+export const postGraduationRegistration = async (data) => {
+  return await axiosInstance.post("/api/form-submit/graduation", data);
+};

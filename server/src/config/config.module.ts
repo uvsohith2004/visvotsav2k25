@@ -11,7 +11,7 @@ import * as Joi from 'joi';
         CRON_SECRET: Joi.string().required(),
         GMAIL_USER: Joi.string().required(),
         GMAIL_APP_PASSWORD: Joi.string().required(),
-        SPREADSHEET_ID: Joi.string().required(),
+        SPREADSHEET_ID: Joi.string().optional(),
         GOOGLE_CRED_BASE64: Joi.string().required(),
         RECIPIENTS: Joi.string().required(),
       }),

@@ -36,6 +36,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { postGraduationRegistration } from "@/services/api";
 
 const graduationDatesByBranch = {
   CSE: "04-07-2026",
@@ -110,30 +111,14 @@ const RegisterPage = () => {
       submittedAt: new Date().toISOString(),
     };
 
-    const endpoint = import.meta.env.VITE_GRADUATION_FORM_ENDPOINT;
-
     try {
       setSubmitStatus("loading");
       setSubmitMessage("");
-
-      if (endpoint) {
-        await fetch(endpoint, {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(passData),
-        });
-      }
+      await postGraduationRegistration(passData);
 
       setSubmittedPass(passData);
       setSubmitStatus("success");
-      setSubmitMessage(
-        endpoint
-          ? "Submitted successfully. Your pass is ready below."
-          : "Pass preview is ready. Add VITE_GRADUATION_FORM_ENDPOINT to also send responses to Google Sheets."
-      );
+      setSubmitMessage("Submitted successfully. Your pass is ready below.");
     } catch {
       setSubmitStatus("error");
       setSubmitMessage("Submission failed. Please try again.");

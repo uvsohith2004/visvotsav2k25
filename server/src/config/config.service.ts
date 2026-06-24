@@ -19,11 +19,21 @@ export class ConfigService {
     return recipients;
   }
   getSpreadsheetId(): string {
-    const sheetId = this.nestConfigService.get<string>('SPREADSHEET_ID');
-    if (!sheetId) {
-      throw new Error('SPREADSHEET_ID environment variable is not set!');
-    }
-    return sheetId;
+    return (
+      this.nestConfigService.get<string>('SPREADSHEET_ID') ||
+      this.getGraduationSpreadsheetId()
+    );
+  }
+
+  getGraduationSpreadsheetId(): string {
+    return (
+      this.nestConfigService.get<string>('GRADUATION_SPREADSHEET_ID') ||
+      '1nSK3VmRhyEPPg-6gsBVQez-N0NVU6s0mRdFgpCW2i-k'
+    );
+  }
+
+  getGraduationSheetName(): string | undefined {
+    return this.nestConfigService.get<string>('GRADUATION_SHEET_NAME');
   }
 
   getGoogleCredentials(): Record<string, any> {
