@@ -48,13 +48,6 @@ import {
 
 import { useFormSubmit } from "@/hooks/submit";
 import ConfettiPopup from "@/components/submit-popup";
-import RegistrationClosed from "@/components/registration-closed";
-import homeData from "@/constants/homeData";
-const checkRegistrationStatus = () => {
-  const currentDate = new Date();
-  const registrationEndDate = new Date(`${homeData.lastDate}T${homeData.lastTime}:00`);
-  return currentDate > registrationEndDate;
-}
 const RegisterPage = () => {
 
   const [step, setStep] = useState(1);
@@ -84,18 +77,6 @@ const RegisterPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const [isRegistrationClosed, setIsRegistrationClosed] = useState(false);
-  useEffect(() => {
-    const checkStatus = () => {
-      setIsRegistrationClosed(checkRegistrationStatus());
-    };
-    
-    checkStatus();
-    const interval = setInterval(checkStatus, 60000); // Check every minute
-    
-    return () => clearInterval(interval);
-  }, []);
-  
   useEffect(() => {
     if (mutation.isSuccess) {
       form.reset();
@@ -231,9 +212,6 @@ const RegisterPage = () => {
     };
   };
   const watchedEvent = form.watch("event");
-  if (isRegistrationClosed) {
-    return <RegistrationClosed />;
-  }
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-200 flex pt-20 p-4 flex-col gap-4">
       <Card className="w-full max-w-2xl mx-auto shadow-2xl">
