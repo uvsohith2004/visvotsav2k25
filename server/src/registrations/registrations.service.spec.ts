@@ -21,7 +21,9 @@ const mockEmailService = {
 
 // --- Helper function to generate valid mock DTOs ---
 let dtoCounter = 0;
-const createMockRegistrationDto = (overrides: Partial<CreateRegistrationDto> = {}): CreateRegistrationDto => {
+const createMockRegistrationDto = (
+  overrides: Partial<CreateRegistrationDto> = {},
+): CreateRegistrationDto => {
   dtoCounter++;
   const defaults: CreateRegistrationDto = {
     name: `Test User ${dtoCounter}`,
@@ -40,12 +42,14 @@ const createMockRegistrationDto = (overrides: Partial<CreateRegistrationDto> = {
 
   // Auto-generate participantDetails if 'participants' is overridden and 'participantDetails' isn't.
   if (overrides.participants && !overrides.participantDetails) {
-    dto.participantDetails = Array.from({ length: overrides.participants }, (_, i) => ({ name: `Member ${i + 1}` }));
+    dto.participantDetails = Array.from(
+      { length: overrides.participants },
+      (_, i) => ({ name: `Member ${i + 1}` }),
+    );
   }
 
   return dto;
 };
-
 
 describe('RegistrationsService', () => {
   let service: RegistrationsService;
@@ -75,24 +79,28 @@ describe('RegistrationsService', () => {
       const dto = createMockRegistrationDto();
       const prismaError = new PrismaClientKnownRequestError(
         'Unique constraint failed',
-        { code: 'P2002', clientVersion: 'x.x.x', meta: { target: ['email'] } }
+        { code: 'P2002', clientVersion: 'x.x.x', meta: { target: ['email'] } },
       );
       prisma.registration.create.mockRejectedValue(prismaError);
 
-      await expect(service.createRegistration(dto)).rejects.toThrow(ConflictException);
+      await expect(service.createRegistration(dto)).rejects.toThrow(
+        ConflictException,
+      );
     });
 
     it('should rethrow an error if database creation fails for a non-conflict reason', async () => {
-        const dto = createMockRegistrationDto();
-        const genericError = new Error('Database connection lost');
-        prisma.registration.create.mockRejectedValue(genericError);
-  
-        await expect(service.createRegistration(dto)).rejects.toThrow(genericError);
+      const dto = createMockRegistrationDto();
+      const genericError = new Error('Database connection lost');
+      prisma.registration.create.mockRejectedValue(genericError);
+
+      await expect(service.createRegistration(dto)).rejects.toThrow(
+        genericError,
+      );
     });
 
     // --- Dynamic Success Tests for All Events and All Participant Counts ---
     describe('for all events and valid participant counts', () => {
-      allEvents.forEach(eventName => {
+      allEvents.forEach((eventName) => {
         describe(`for event: ${eventName}`, () => {
           const maxParticipants = participantLimits[eventName];
 
@@ -100,17 +108,24 @@ describe('RegistrationsService', () => {
           for (let i = 0; i <= maxParticipants; i++) {
             it(`should allow registration with ${i} additional participant(s)`, async () => {
               // Arrange
-              const dto = createMockRegistrationDto({ 
-                event: eventName, 
-                participants: i 
+              const dto = createMockRegistrationDto({
+                event: eventName,
+                participants: i,
               });
-              prisma.registration.create.mockResolvedValue({ id: 1, ...dto, createdAt: new Date(), pushedToSheets: false });
-              
+              prisma.registration.create.mockResolvedValue({
+                id: 1,
+                ...dto,
+                createdAt: new Date(),
+                pushedToSheets: false,
+              });
+
               // Act
               await service.createRegistration(dto);
-              
+
               // Assert
-              expect(prisma.registration.create).toHaveBeenCalledWith({ data: dto });
+              expect(prisma.registration.create).toHaveBeenCalledWith({
+                data: dto,
+              });
             });
           }
         });
@@ -118,4 +133,3 @@ describe('RegistrationsService', () => {
     });
   });
 });
-

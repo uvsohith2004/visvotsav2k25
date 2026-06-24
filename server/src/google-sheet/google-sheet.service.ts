@@ -1,5 +1,5 @@
 // src/google-sheets/google-sheets.service.ts
-import { Injectable} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { google, Auth, sheets_v4 } from 'googleapis';
 import { ConfigService } from '../config/config.service';
 
@@ -21,14 +21,14 @@ export class GoogleSheetService {
     this.sheets = google.sheets({ version: 'v4', auth: this.auth });
   }
 
-  async appendRows(sheetName: string, rows: any[][]) { 
+  async appendRows(sheetName: string, rows: any[][]) {
     if (rows.length === 0) return;
     await this.sheets.spreadsheets.values.append({
       spreadsheetId: this.spreadsheetId,
       range: `${sheetName}!A2`,
       valueInputOption: 'USER_ENTERED',
       requestBody: {
-        values: rows, 
+        values: rows,
       },
     });
   }

@@ -23,13 +23,14 @@ import { APP_GUARD } from '@nestjs/core';
     TasksModule,
     ThrottlerModule.forRoot([
       {
-        ttl: 60000, 
-        limit: 20, 
+        ttl: 60000,
+        limit: 20,
       },
     ]),
   ],
   controllers: [AppController],
-  providers: [AppService,
+  providers: [
+    AppService,
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,

@@ -10,7 +10,10 @@ let cachedServer: any;
 async function bootstrap() {
   const expressApp = express();
 
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
+  const app = await NestFactory.create(
+    AppModule,
+    new ExpressAdapter(expressApp),
+  );
   app.getHttpAdapter().getInstance().set('trust proxy', 1);
   app.enableCors({
     origin: (origin, callback) => {
@@ -35,7 +38,9 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Visvotsav Fest API')
-    .setDescription('API documentation for the Visvotsav college fest registration system.')
+    .setDescription(
+      'API documentation for the Visvotsav college fest registration system.',
+    )
     .setVersion('1.0')
     .addTag('Registrations')
     .build();

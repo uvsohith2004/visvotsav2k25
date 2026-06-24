@@ -9,7 +9,10 @@ let cachedServer: any;
 async function bootstrap() {
   const expressApp = express();
 
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
+  const app = await NestFactory.create(
+    AppModule,
+    new ExpressAdapter(expressApp),
+  );
   app.getHttpAdapter().getInstance().set('trust proxy', 1);
   app.enableCors({
     origin: [
@@ -26,7 +29,6 @@ async function bootstrap() {
 }
 
 export default async function handler(req, res) {
-
   if (!cachedServer) {
     cachedServer = await bootstrap();
   }

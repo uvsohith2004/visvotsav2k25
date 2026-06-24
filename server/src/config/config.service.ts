@@ -4,14 +4,14 @@ import { ConfigService as NestConfigService } from '@nestjs/config';
 @Injectable()
 export class ConfigService {
   constructor(private nestConfigService: NestConfigService) {}
-  getCronSecret(): string { 
+  getCronSecret(): string {
     const cronSecret = this.nestConfigService.get<string>('CRON_SECRET');
     if (!cronSecret) {
       throw new Error('CRON_SECRET environment variable is not set!');
     }
     return cronSecret;
   }
-  getRecipients(): string{
+  getRecipients(): string {
     const recipients = this.nestConfigService.get<string>('RECIPIENTS');
     if (!recipients) {
       throw new Error('RECIPIENTS environment variable is not set!');
@@ -26,19 +26,19 @@ export class ConfigService {
     return sheetId;
   }
 
-
   getGoogleCredentials(): Record<string, any> {
-    const base64String = this.nestConfigService.get<string>('GOOGLE_CRED_BASE64');
-    
+    const base64String =
+      this.nestConfigService.get<string>('GOOGLE_CRED_BASE64');
+
     if (!base64String) {
       throw new Error('GOOGLE_CRED_BASE64 environment variable is not set!');
     }
-    
+
     try {
       const decodedBuffer = Buffer.from(base64String, 'base64');
       const jsonString = decodedBuffer.toString('utf-8');
       return JSON.parse(jsonString);
-    } catch (error) {
+    } catch {
       throw new Error('Failed to decode or parse GOOGLE_CRED_BASE64.');
     }
   }
@@ -51,7 +51,7 @@ export class ConfigService {
     return email;
   }
   getEmailPassword(): string {
-    const password = this.nestConfigService.get<string>('GMAIL_APP_PASSWORD');  
+    const password = this.nestConfigService.get<string>('GMAIL_APP_PASSWORD');
     if (!password) {
       throw new Error('EMAIL_PASSWORD environment variable is not set!');
     }

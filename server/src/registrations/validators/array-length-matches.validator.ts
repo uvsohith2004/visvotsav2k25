@@ -1,9 +1,15 @@
-import { ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments } from 'class-validator';
+import {
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
+  ValidationArguments,
+} from 'class-validator';
 import { Injectable } from '@nestjs/common';
 
 @ValidatorConstraint({ name: 'arrayLengthMatchesProperty', async: false })
 @Injectable()
-export class ArrayLengthMatchesPropertyConstraint implements ValidatorConstraintInterface {
+export class ArrayLengthMatchesPropertyConstraint
+  implements ValidatorConstraintInterface
+{
   validate(value: any[], args: ValidationArguments) {
     if (!Array.isArray(value)) return false;
     const [relatedPropertyName] = args.constraints;

@@ -3,11 +3,10 @@ import { QueriesService } from './queries.service';
 import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { EventQueriesDto } from './dto/event-queries.dto';
 
-
 @ApiTags('Queries')
 @Controller('api/queries')
 export class QueriesController {
-  constructor(private readonly queriesService:QueriesService) {}
+  constructor(private readonly queriesService: QueriesService) {}
 
   @Post()
   @ApiBody({ type: EventQueriesDto })
