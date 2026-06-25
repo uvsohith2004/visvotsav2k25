@@ -9,6 +9,10 @@ import {
   RotateCcw,
   Send,
   UserRound,
+  Camera,
+  Trash2,
+  UploadCloud,
+  ShieldAlert,
 } from "lucide-react";
 
 import { branches } from "@/constants";
@@ -75,10 +79,61 @@ const graduationFormSchema = z.object({
     errorMap: () => ({ message: "Please select number of guests." }),
   }),
   email: z.string().email({ message: "Please enter a valid email ID." }),
+  photo: z.string({ required_error: "Photo is required." }).min(1, { message: "Photo is required." }),
 });
 
 const getGraduationDate = (branch) =>
   graduationDatesByBranch[branch] || graduationDatesByBranch.Others;
+
+const resizeImage = (file, maxWidth = 240, maxHeight = 320) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let width = img.width;
+        let height = img.height;
+
+        const targetAspectRatio = 3 / 4;
+        let sourceX = 0;
+        let sourceY = 0;
+        let sourceWidth = width;
+        let sourceHeight = height;
+
+        if (width / height > targetAspectRatio) {
+          sourceWidth = height * targetAspectRatio;
+          sourceX = (width - sourceWidth) / 2;
+        } else {
+          sourceHeight = width / targetAspectRatio;
+          sourceY = (height - sourceHeight) / 2;
+        }
+
+        canvas.width = maxWidth;
+        canvas.height = maxHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(
+          img,
+          sourceX,
+          sourceY,
+          sourceWidth,
+          sourceHeight,
+          0,
+          0,
+          maxWidth,
+          maxHeight
+        );
+
+        const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+        resolve(dataUrl);
+      };
+      img.onerror = (err) => reject(err);
+    };
+    reader.onerror = (err) => reject(err);
+  });
+};
 
 const RegisterPage = () => {
   const [submitStatus, setSubmitStatus] = useState("idle");
@@ -95,6 +150,7 @@ const RegisterPage = () => {
       willAttend: "Yes",
       numberOfGuests: "0",
       email: "",
+      photo: "",
     },
     mode: "onChange",
   });
@@ -170,6 +226,115 @@ const RegisterPage = () => {
                         <FormControl>
                           <Input placeholder="20A91A0401" {...field} />
                         </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="photo"
+                    render={({ field }) => (
+                      <FormItem className="space-y-2">
+                        <FormLabel className="text-base font-semibold">Professional Photo</FormLabel>
+                        <FormControl>
+                          <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+                            <div className="flex-1">
+                              <div
+                                className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer transition-colors duration-200 min-h-[160px] ${
+                                  field.value
+                                    ? "border-green-300 bg-green-50/30"
+                                    : "border-gray-300 hover:border-primary/50 hover:bg-primary/5"
+                                }`}
+                                onClick={() => document.getElementById("photo-input-file").click()}
+                                onDragOver={(e) => e.preventDefault()}
+                                onDrop={async (e) => {
+                                  e.preventDefault();
+                                  if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                                    const file = e.dataTransfer.files[0];
+                                    if (file.type.startsWith("image/")) {
+                                      try {
+                                        const resized = await resizeImage(file);
+                                        field.onChange(resized);
+                                      } catch (error) {
+                                        console.error("Error resizing image:", error);
+                                      }
+                                    }
+                                  }
+                                }}
+                              >
+                                <input
+                                  id="photo-input-file"
+                                  type="file"
+                                  accept="image/*"
+                                  className="hidden"
+                                  onChange={async (e) => {
+                                    if (e.target.files && e.target.files[0]) {
+                                      const file = e.target.files[0];
+                                      try {
+                                        const resized = await resizeImage(file);
+                                        field.onChange(resized);
+                                      } catch (error) {
+                                        console.error("Error resizing image:", error);
+                                      }
+                                    }
+                                  }}
+                                />
+                                <UploadCloud className="h-10 w-10 text-gray-400 mb-2" />
+                                <p className="text-sm font-medium text-gray-700">
+                                  Drag & drop or click to upload photo
+                                </p>
+                                <p className="text-xs text-gray-500 mt-1">
+                                  JPEG or PNG (Passport style, 3:4 ratio)
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="flex flex-col items-center self-center sm:self-start">
+                              <div className="w-[110px] h-[140px] border-2 border-gray-300 bg-gray-50 rounded shadow-inner overflow-hidden flex items-center justify-center relative group">
+                                {field.value ? (
+                                  <>
+                                    <img
+                                      src={field.value}
+                                      alt="Preview"
+                                      className="w-full h-full object-cover"
+                                    />
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        field.onChange("");
+                                      }}
+                                      className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-200 text-white rounded"
+                                    >
+                                      <Trash2 className="h-5 w-5 text-white" />
+                                    </button>
+                                  </>
+                                ) : (
+                                  <div className="flex flex-col items-center justify-center text-center p-2 text-gray-400">
+                                    <Camera className="h-6 w-6 mb-1 text-gray-300" />
+                                    <span className="text-[10px]">Photo Preview</span>
+                                  </div>
+                                )}
+                              </div>
+                              {field.value && (
+                                <button
+                                  type="button"
+                                  onClick={() => field.onChange("")}
+                                  className="text-xs text-red-600 hover:text-red-800 font-medium flex items-center gap-1 mt-1.5 transition-colors"
+                                >
+                                  <Trash2 className="h-3 w-3" /> Remove Photo
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        </FormControl>
+                        <div className="flex items-start gap-1.5 text-xs text-amber-600 bg-amber-50 border border-amber-200 p-2.5 rounded-md mt-1">
+                          <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
+                          <span>
+                            <strong>Requirement:</strong> Please upload a high-quality professional photo. Your head and shoulders should be centered, facing the camera with a clean/formal background. This photo will be printed on your final graduation pass.
+                          </span>
+                        </div>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -399,23 +564,42 @@ const PassPreview = ({ pass }) => (
       </h2>
     </div>
 
-    <div className="mt-6 space-y-3">
-      <PassRow label="Student Name" value={pass.studentName} />
-      <PassRow label="Hall Ticket" value={pass.hallTicketNumber} />
-      <PassRow label="Branch" value={pass.branch} />
+    <div className="mt-6 grid grid-cols-[1fr_110px] gap-6">
+      <div className="space-y-3">
+        <PassRow label="Student Name" value={pass.studentName} />
+        <PassRow label="Hall Ticket" value={pass.hallTicketNumber} />
+        <PassRow label="Branch" value={pass.branch} />
+        <PassRow label="Graduation Date" value={pass.graduationDate} />
+      </div>
+      
+      <div className="flex flex-col items-center">
+        <div className="w-[110px] h-[140px] border-2 border-gray-300 bg-gray-50 overflow-hidden shadow-sm flex items-center justify-center relative rounded">
+          {pass.photo ? (
+            <img 
+              src={pass.photo} 
+              alt="Student Passport" 
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <span className="text-[10px] text-gray-400 text-center px-1">No Photo</span>
+          )}
+        </div>
+        <div className="text-[9px] uppercase tracking-wider text-gray-500 mt-1 font-sans font-semibold">
+          Passport Photo
+        </div>
+      </div>
     </div>
 
     <div className="my-5 border-t border-gray-300" />
 
     <div className="space-y-3">
-      <PassRow label="Graduation Date" value={pass.graduationDate} />
       <PassRow label="Reporting Time" value={pass.reportingTime} />
       <PassRow label="Venue" value={pass.venue} />
       <PassRow label="Guests Allowed" value={pass.numberOfGuests} />
     </div>
 
     <div className="mt-10 flex justify-end">
-      <div className="w-48 border-t border-gray-500 pt-2 text-center">
+      <div className="w-48 border-t border-gray-500 pt-2 text-center text-xs">
         Principal Signature
       </div>
     </div>
@@ -447,30 +631,48 @@ const downloadPassAsPdf = (pass) => {
           @page { size: A4; margin: 24mm; }
           body { font-family: "Courier New", monospace; color: #111827; }
           .pass { border: 2px dashed #d1d5db; padding: 28px; max-width: 680px; margin: 0 auto; }
-          .title { border-top: 1px solid #6b7280; border-bottom: 1px solid #6b7280; padding: 16px; text-align: center; font-weight: 700; font-size: 20px; letter-spacing: 1px; }
-          .section { margin-top: 28px; }
+          .title { border-top: 1px solid #6b7280; border-bottom: 1px solid #6b7280; padding: 16px; text-align: center; font-weight: 700; font-size: 20px; letter-spacing: 1px; margin-bottom: 24px; }
+          .content-area { display: flex; justify-content: space-between; align-items: flex-start; }
+          .details { flex: 1; }
+          .photo-container { display: flex; flex-direction: column; align-items: center; margin-left: 24px; }
+          .photo-box { width: 110px; height: 140px; border: 2px solid #9ca3af; background: #f9fafb; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+          .photo-img { width: 100%; height: 100%; object-fit: cover; }
+          .photo-label { font-size: 9px; text-transform: uppercase; color: #6b7280; font-family: Arial, sans-serif; letter-spacing: 0.5px; margin-top: 4px; font-weight: bold; }
+          .section { margin-top: 24px; }
           .row { display: grid; grid-template-columns: 180px 1fr; gap: 16px; margin: 14px 0; font-size: 15px; }
           .label { color: #4b5563; }
           .value { font-weight: 700; }
           .line { border-top: 1px solid #d1d5db; margin: 28px 0; }
-          .signature { width: 220px; border-top: 1px solid #4b5563; margin: 56px 0 0 auto; padding-top: 10px; text-align: center; }
+          .signature { width: 220px; border-top: 1px solid #4b5563; margin: 56px 0 0 auto; padding-top: 10px; text-align: center; font-size: 14px; }
         </style>
       </head>
       <body>
         <div class="pass">
           <div class="title">PBR VITS GRADUATION DAY</div>
-          <div class="section">
-            <div class="row"><span class="label">Student Name</span><span class="value">: ${escapeHtml(pass.studentName)}</span></div>
-            <div class="row"><span class="label">Hall Ticket</span><span class="value">: ${escapeHtml(pass.hallTicketNumber)}</span></div>
-            <div class="row"><span class="label">Branch</span><span class="value">: ${escapeHtml(pass.branch)}</span></div>
+          
+          <div class="content-area">
+            <div class="details">
+              <div class="row"><span class="label">Student Name</span><span class="value">: ${escapeHtml(pass.studentName)}</span></div>
+              <div class="row"><span class="label">Hall Ticket</span><span class="value">: ${escapeHtml(pass.hallTicketNumber)}</span></div>
+              <div class="row"><span class="label">Branch</span><span class="value">: ${escapeHtml(pass.branch)}</span></div>
+              <div class="row"><span class="label">Graduation Date</span><span class="value">: ${escapeHtml(pass.graduationDate)}</span></div>
+            </div>
+            <div class="photo-container">
+              <div class="photo-box">
+                ${pass.photo ? `<img class="photo-img" src="${pass.photo}" alt="Student Photo" />` : `<span style="font-size: 10px; color: #9ca3af;">No Photo</span>`}
+              </div>
+              <div class="photo-label">Passport Photo</div>
+            </div>
           </div>
+          
           <div class="line"></div>
+          
           <div class="section">
-            <div class="row"><span class="label">Graduation Date</span><span class="value">: ${escapeHtml(pass.graduationDate)}</span></div>
             <div class="row"><span class="label">Reporting Time</span><span class="value">: ${escapeHtml(pass.reportingTime)}</span></div>
             <div class="row"><span class="label">Venue</span><span class="value">: ${escapeHtml(pass.venue)}</span></div>
             <div class="row"><span class="label">Guests Allowed</span><span class="value">: ${escapeHtml(pass.numberOfGuests)}</span></div>
           </div>
+          
           <div class="signature">Principal Signature</div>
         </div>
         <script>

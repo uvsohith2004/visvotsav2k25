@@ -88,6 +88,19 @@ export class GoogleSheetService {
     );
 
     if (headers.length > 0) {
+      const normalizedHeaders = headers.map((h) => this.normalizeHeader(h));
+      if (!normalizedHeaders.includes('photo')) {
+        const updatedHeaders = [...headers, 'Photo'];
+        await this.sheets.spreadsheets.values.update({
+          spreadsheetId,
+          range: `${this.formatSheetRange(sheetName)}!1:1`,
+          valueInputOption: 'USER_ENTERED',
+          requestBody: {
+            values: [updatedHeaders],
+          },
+        });
+        return updatedHeaders;
+      }
       return headers;
     }
 

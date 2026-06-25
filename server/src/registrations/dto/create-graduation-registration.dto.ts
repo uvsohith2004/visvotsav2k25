@@ -71,4 +71,9 @@ export class CreateGraduationRegistrationDto {
   @IsString()
   @IsNotEmpty()
   venue: string;
+
+  @ApiProperty({ example: 'data:image/jpeg;base64,...' })
+  @IsString()
+  @IsNotEmpty()
+  photo: string;
 }

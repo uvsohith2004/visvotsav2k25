@@ -76,6 +76,7 @@ export class RegistrationsService {
       'Reporting Time',
       'Venue',
       'Submitted At',
+      'Photo',
     ];
 
     await this.googleSheets.appendObjectRow({
@@ -96,6 +97,7 @@ export class RegistrationsService {
         submittedAt: new Date().toLocaleString('en-IN', {
           timeZone: 'Asia/Kolkata',
         }),
+        photo: dto.photo,
       },
     });
 
