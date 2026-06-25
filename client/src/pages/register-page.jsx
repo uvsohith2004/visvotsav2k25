@@ -176,9 +176,12 @@ const RegisterPage = () => {
       setSubmitStatus("success");
       setSubmitMessage("Submitted successfully. Your pass is ready below.");
     } catch (error) {
+      setSubmittedPass(passData);
       setSubmitStatus("error");
-      const errMsg = error.response?.data?.message || error.message || "Submission failed. Please try again.";
-      setSubmitMessage(Array.isArray(errMsg) ? errMsg.join(", ") : errMsg);
+      const errMsg = error.response?.data?.message || error.message || "Connection failed";
+      setSubmitMessage(
+        `Pass generated successfully. Note: Server database sync failed (${errMsg}). You can still download your PDF pass below.`
+      );
     }
   };
 
