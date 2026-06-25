@@ -4,7 +4,6 @@ import { useRef } from 'react';
 import { Outlet} from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Footer from '@/components/footer';
 // import CountdownTimer from '@/components/timer';
 import { Toaster } from '@/components/ui/toaster';
 
@@ -23,10 +22,6 @@ const MainLayout = () => {
       <main >
         <Outlet />
       </main>
-
-      <footer >
-        <Footer/>
-      </footer>
    
       {/* <CountdownTimer/> */}
     </div>
