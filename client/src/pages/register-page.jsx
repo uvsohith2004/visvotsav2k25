@@ -175,9 +175,10 @@ const RegisterPage = () => {
       setSubmittedPass(passData);
       setSubmitStatus("success");
       setSubmitMessage("Submitted successfully. Your pass is ready below.");
-    } catch {
+    } catch (error) {
       setSubmitStatus("error");
-      setSubmitMessage("Submission failed. Please try again.");
+      const errMsg = error.response?.data?.message || error.message || "Submission failed. Please try again.";
+      setSubmitMessage(Array.isArray(errMsg) ? errMsg.join(", ") : errMsg);
     }
   };
 

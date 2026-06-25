@@ -9,6 +9,8 @@ let cachedServer: any;
 
 async function bootstrap() {
   const expressApp = express();
+  expressApp.use(express.json({ limit: '10mb' }));
+  expressApp.use(express.urlencoded({ limit: '10mb', extended: true }));
 
   const app = await NestFactory.create(
     AppModule,
@@ -21,6 +23,7 @@ async function bootstrap() {
         'https://graduation-day-teal.vercel.app',
         'http://localhost:3000',
         'http://localhost:3001',
+        'http://localhost:5173',
       ];
       if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) {
