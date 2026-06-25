@@ -52,16 +52,12 @@ const MainPage = () => {
               >
                 Know More
               </Link>
-              <a
-                href={posterImage}
-                download
-                className="group relative bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105"
+              <RouterLink
+                to="/register"
+                className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105 cursor-pointer text-center flex items-center justify-center"
               >
-                Download
-                <span className="absolute top-0 right-0 -mt-2 -mr-2 px-2 py-1 bg-primary text-xs rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {home.downloadSize}
-                </span>
-              </a>
+                Register Now
+              </RouterLink>
             </div>
 
             <div className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-8 mb-8">
