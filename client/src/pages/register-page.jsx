@@ -557,25 +557,24 @@ const StatusMessage = ({ status, message }) => (
 const PassPreview = ({ pass }) => (
   <div
     id="graduation-pass"
-    className="relative flex flex-col md:flex-row w-full bg-white border-2 border-gray-200 rounded-2xl shadow-xl overflow-hidden min-h-[300px]"
+    className="rounded-lg border-2 border-dashed border-gray-300 bg-white p-6 font-mono text-sm text-gray-900"
   >
-    {/* Punch cutouts */}
-    <div className="absolute -top-3.5 left-[70%] -ml-3.5 w-7 h-7 bg-purple-100 rounded-full border border-gray-200 z-10 hidden md:block" />
-    <div className="absolute -bottom-3.5 left-[70%] -ml-3.5 w-7 h-7 bg-indigo-200 rounded-full border border-gray-200 z-10 hidden md:block" />
+    <div className="border-y border-gray-400 py-3 text-center mb-6">
+      <h2 className="text-lg font-bold tracking-wide">
+        PBR VITS GRADUATION DAY PASS
+      </h2>
+    </div>
 
-    {/* Main Part */}
-    <div className="w-full md:w-[70%] p-6 flex flex-col justify-between space-y-6">
-      <div className="flex justify-between items-center border-b pb-3 border-gray-200">
-        <span className="text-base font-extrabold text-indigo-950 tracking-wide font-sans">
-          PBR VITS GRADUATION DAY PASS
-        </span>
-        <span className="bg-indigo-950 text-white text-[9px] font-bold px-2 py-1 rounded tracking-wider shrink-0">
-          ADMIT ONE
-        </span>
+    <div className="grid grid-cols-[1fr_110px] gap-6">
+      <div className="space-y-3">
+        <PassRow label="Student Name" value={pass.studentName} />
+        <PassRow label="Hall Ticket" value={pass.hallTicketNumber} />
+        <PassRow label="Branch" value={pass.branch} />
+        <PassRow label="Graduation Date" value={pass.graduationDate} />
       </div>
-
-      <div className="flex gap-5 items-center">
-        <div className="w-[100px] h-[130px] border-2 border-gray-300 bg-gray-50 overflow-hidden shadow rounded-md flex items-center justify-center shrink-0">
+      
+      <div className="flex flex-col items-center">
+        <div className="w-[110px] h-[140px] border-2 border-gray-300 bg-gray-50 overflow-hidden shadow-sm flex items-center justify-center relative rounded">
           {pass.photo ? (
             <img 
               src={pass.photo} 
@@ -586,71 +585,20 @@ const PassPreview = ({ pass }) => (
             <span className="text-[10px] text-gray-400 text-center px-1">No Photo</span>
           )}
         </div>
-        <div className="space-y-2 flex-1 font-mono text-sm">
-          <div className="grid grid-cols-[110px_1fr] gap-1">
-            <span className="text-xs text-gray-500 font-bold uppercase font-sans">Name</span>
-            <span className="font-semibold text-gray-800">: {pass.studentName}</span>
-          </div>
-          <div className="grid grid-cols-[110px_1fr] gap-1">
-            <span className="text-xs text-gray-500 font-bold uppercase font-sans">Hall Ticket</span>
-            <span className="font-semibold text-gray-800">: {pass.hallTicketNumber}</span>
-          </div>
-          <div className="grid grid-cols-[110px_1fr] gap-1">
-            <span className="text-xs text-gray-500 font-bold uppercase font-sans">Branch</span>
-            <span className="font-semibold text-gray-800">: {pass.branch}</span>
-          </div>
-          <div className="grid grid-cols-[110px_1fr] gap-1">
-            <span className="text-xs text-gray-500 font-bold uppercase font-sans">Date</span>
-            <span className="font-semibold text-gray-800">: {pass.graduationDate}</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex justify-between items-center border-t pt-3 border-gray-100 text-xs font-sans">
-        <div className="flex flex-col">
-          <span className="text-[9px] text-gray-400 font-bold uppercase">Reporting Time</span>
-          <span className="font-bold text-gray-700">{pass.reportingTime}</span>
-        </div>
-        <div className="flex flex-col">
-          <span className="text-[9px] text-gray-400 font-bold uppercase">Venue</span>
-          <span className="font-bold text-gray-700">{pass.venue}</span>
-        </div>
-        <div className="flex flex-col">
-          <span className="text-[9px] text-gray-400 font-bold uppercase">Guests</span>
-          <span className="font-bold text-gray-700">{pass.numberOfGuests}</span>
-        </div>
       </div>
     </div>
 
-    {/* Dashed Separator */}
-    <div className="absolute left-[70%] top-0 bottom-0 border-l-2 border-dashed border-gray-200 hidden md:block" />
+    <div className="my-5 border-t border-gray-300" />
 
-    {/* Stub Part */}
-    <div className="w-full md:w-[30%] p-6 flex flex-col justify-between items-center bg-gray-50/50 space-y-4 border-t md:border-t-0 md:border-l border-gray-100">
-      <div className="text-[10px] font-bold text-gray-500 tracking-wider uppercase font-sans">
-        ADMIT PASS
-      </div>
+    <div className="space-y-3">
+      <PassRow label="Reporting Time" value={pass.reportingTime} />
+      <PassRow label="Venue" value={pass.venue} />
+      <PassRow label="Guests Allowed" value={pass.numberOfGuests} />
+    </div>
 
-      <div className="flex h-12 gap-[2px] items-stretch">
-        <div className="bg-gray-800 w-[2px]" />
-        <div className="bg-gray-800 w-[4px]" />
-        <div className="bg-gray-800 w-[1px] mr-[2px]" />
-        <div className="bg-gray-800 w-[3px]" />
-        <div className="bg-gray-800 w-[2px] mr-[1px]" />
-        <div className="bg-gray-800 w-[5px]" />
-        <div className="bg-gray-800 w-[1px]" />
-        <div className="bg-gray-800 w-[4px] mr-[1px]" />
-        <div className="bg-gray-800 w-[2px]" />
-        <div className="bg-gray-800 w-[3px]" />
-      </div>
-
-      <div className="text-center">
-        <div className="font-mono font-bold text-gray-800 text-sm">{pass.hallTicketNumber}</div>
-        <div className="text-[10px] text-gray-400 font-semibold">{pass.branch} | GUESTS: {pass.numberOfGuests}</div>
-      </div>
-
-      <div className="text-[8px] font-bold text-gray-400 tracking-wider uppercase font-sans">
-        VITS SIGNATURE
+    <div className="mt-10 flex justify-end">
+      <div className="w-48 border-t border-gray-500 pt-2 text-center text-xs">
+        Principal Signature
       </div>
     </div>
   </div>
@@ -678,253 +626,50 @@ const downloadPassAsPdf = (pass) => {
       <head>
         <title>Graduation Pass - ${escapeHtml(pass.hallTicketNumber)}</title>
         <style>
-          @page { size: A4 landscape; margin: 15mm; }
-          body { font-family: "Courier New", monospace; color: #111827; background-color: #f3f4f6; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-          
-          .ticket { 
-            display: flex; 
-            width: 800px; 
-            height: 340px; 
-            background: #ffffff; 
-            border-radius: 16px; 
-            border: 2px solid #e5e7eb; 
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); 
-            position: relative; 
-            overflow: hidden; 
-            box-sizing: border-box;
-            margin: 0 auto;
-          }
-          
-          /* Punch cutouts */
-          .ticket::before, .ticket::after {
-            content: '';
-            position: absolute;
-            width: 28px;
-            height: 28px;
-            background: #f3f4f6;
-            border-radius: 50%;
-            left: 70%; 
-            margin-left: -14px;
-            z-index: 10;
-            border: 2px solid #e5e7eb;
-          }
-          .ticket::before { top: -14px; }
-          .ticket::after { bottom: -14px; }
-
-          .main-part { 
-            width: 70%; 
-            padding: 24px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
-            box-sizing: border-box;
-          }
-          
-          .separator { 
-            width: 0; 
-            border-left: 2px dashed #cbd5e1; 
-            height: 100%; 
-            position: absolute;
-            left: 70%;
-            top: 0;
-          }
-          
-          .stub-part { 
-            width: 30%; 
-            padding: 24px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
-            align-items: center; 
-            box-sizing: border-box;
-            background: #fafafa;
-          }
-
-          .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #111827;
-            padding-bottom: 8px;
-            margin-bottom: 12px;
-          }
-          
-          .title { 
-            font-size: 16px; 
-            font-weight: 800; 
-            color: #1e1b4b; 
-            letter-spacing: 1px;
-            font-family: Arial, sans-serif;
-          }
-
-          .pass-badge {
-            background: #1e1b4b;
-            color: #ffffff;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 4px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            font-family: Arial, sans-serif;
-          }
-
-          .details-container {
-            display: flex;
-            gap: 20px;
-            flex: 1;
-            align-items: center;
-          }
-
-          .photo-box { 
-            width: 105px; 
-            height: 135px; 
-            border: 2px solid #111827; 
-            border-radius: 6px;
-            overflow: hidden; 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            background: #f8fafc;
-            flex-shrink: 0;
-          }
+          @page { size: A4; margin: 24mm; }
+          body { font-family: "Courier New", monospace; color: #111827; }
+          .pass { border: 2px dashed #d1d5db; padding: 28px; max-width: 680px; margin: 0 auto; }
+          .title { border-top: 1px solid #6b7280; border-bottom: 1px solid #6b7280; padding: 16px; text-align: center; font-weight: 700; font-size: 20px; letter-spacing: 1px; margin-bottom: 24px; }
+          .content-area { display: flex; justify-content: space-between; align-items: flex-start; }
+          .details { flex: 1; }
+          .photo-container { display: flex; flex-direction: column; align-items: center; margin-left: 24px; }
+          .photo-box { width: 110px; height: 140px; border: 2px solid #9ca3af; background: #f9fafb; display: flex; align-items: center; justify-content: center; overflow: hidden; }
           .photo-img { width: 100%; height: 100%; object-fit: cover; }
-          
-          .rows {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            flex: 1;
-          }
-          
-          .row { 
-            display: grid; 
-            grid-template-columns: 130px 1fr; 
-            font-size: 13px; 
-          }
-          .label { color: #64748b; text-transform: uppercase; font-size: 10px; font-weight: bold; font-family: Arial, sans-serif; }
-          .value { font-weight: 700; color: #1e293b; }
-
-          .footer-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 12px;
-            margin-top: 12px;
-          }
-
-          .info-block {
-            display: flex;
-            flex-direction: column;
-          }
-          .info-label { font-size: 9px; color: #94a3b8; text-transform: uppercase; font-family: Arial, sans-serif; font-weight: bold; }
-          .info-val { font-size: 12px; font-weight: bold; color: #0f172a; }
-
-          /* Barcode */
-          .barcode {
-            display: flex;
-            height: 50px;
-            width: 150px;
-            margin-top: 15px;
-            align-items: stretch;
-          }
-          .b-line { background-color: #111827; }
-          .w-line { background-color: transparent; }
-
-          .stub-title {
-            font-size: 11px;
-            font-weight: bold;
-            color: #475569;
-            text-align: center;
-            font-family: Arial, sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-          }
-
-          .stub-info {
-            text-align: center;
-            font-family: Arial, sans-serif;
-          }
-          .stub-ticket {
-            font-size: 14px;
-            font-weight: bold;
-            color: #1e1b4b;
-            margin-bottom: 2px;
-          }
-          .stub-sub {
-            font-size: 10px;
-            color: #64748b;
-          }
+          .section { margin-top: 24px; }
+          .row { display: grid; grid-template-columns: 180px 1fr; gap: 16px; margin: 14px 0; font-size: 15px; }
+          .label { color: #4b5563; }
+          .value { font-weight: 700; }
+          .line { border-top: 1px solid #d1d5db; margin: 28px 0; }
+          .signature { width: 220px; border-top: 1px solid #4b5563; margin: 56px 0 0 auto; padding-top: 10px; text-align: center; font-size: 14px; }
         </style>
       </head>
       <body>
-        <div class="ticket">
-          <div class="main-part">
-            <div class="header">
-              <span class="title">PBR VITS GRADUATION DAY PASS</span>
-              <span class="pass-badge">ADMIT ONE</span>
+        <div class="pass">
+          <div class="title">PBR VITS GRADUATION DAY PASS</div>
+          
+          <div class="content-area">
+            <div class="details">
+              <div class="row"><span class="label">Student Name</span><span class="value">: ${escapeHtml(pass.studentName)}</span></div>
+              <div class="row"><span class="label">Hall Ticket</span><span class="value">: ${escapeHtml(pass.hallTicketNumber)}</span></div>
+              <div class="row"><span class="label">Branch</span><span class="value">: ${escapeHtml(pass.branch)}</span></div>
+              <div class="row"><span class="label">Graduation Date</span><span class="value">: ${escapeHtml(pass.graduationDate)}</span></div>
             </div>
-            
-            <div class="details-container">
+            <div class="photo-container">
               <div class="photo-box">
-                ${pass.photo ? `<img class="photo-img" src="${pass.photo}" alt="Student Photo" />` : `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:10px;color:#94a3b8;">NO PHOTO</div>`}
-              </div>
-              <div class="rows">
-                <div class="row"><span class="label">Student Name</span><span class="value">${escapeHtml(pass.studentName)}</span></div>
-                <div class="row"><span class="label">Hall Ticket</span><span class="value">${escapeHtml(pass.hallTicketNumber)}</span></div>
-                <div class="row"><span class="label">Branch</span><span class="value">${escapeHtml(pass.branch)}</span></div>
-                <div class="row"><span class="label">Graduation Date</span><span class="value">${escapeHtml(pass.graduationDate)}</span></div>
-              </div>
-            </div>
-
-            <div class="footer-info">
-              <div class="info-block">
-                <span class="info-label">Reporting Time</span>
-                <span class="info-val">${escapeHtml(pass.reportingTime)}</span>
-              </div>
-              <div class="info-block">
-                <span class="info-label">Venue</span>
-                <span class="info-val">${escapeHtml(pass.venue)}</span>
-              </div>
-              <div class="info-block">
-                <span class="info-label">Guests Allowed</span>
-                <span class="info-val">${escapeHtml(pass.numberOfGuests)}</span>
+                ${pass.photo ? `<img class="photo-img" src="${pass.photo}" alt="Student Photo" />` : `<span style="font-size: 10px; color: #9ca3af;">No Photo</span>`}
               </div>
             </div>
           </div>
           
-          <div class="separator"></div>
+          <div class="line"></div>
           
-          <div class="stub-part">
-            <div class="stub-title">ADMIT PASS</div>
-            
-            <div class="barcode">
-              <div class="b-line" style="width: 2px; margin-right: 2px;"></div>
-              <div class="b-line" style="width: 4px; margin-right: 1px;"></div>
-              <div class="b-line" style="width: 1px; margin-right: 3px;"></div>
-              <div class="b-line" style="width: 3px; margin-right: 2px;"></div>
-              <div class="b-line" style="width: 2px; margin-right: 1px;"></div>
-              <div class="b-line" style="width: 5px; margin-right: 3px;"></div>
-              <div class="b-line" style="width: 1px; margin-right: 2px;"></div>
-              <div class="b-line" style="width: 4px; margin-right: 2px;"></div>
-              <div class="b-line" style="width: 2px; margin-right: 1px;"></div>
-              <div class="b-line" style="width: 3px; margin-right: 3px;"></div>
-              <div class="b-line" style="width: 1px; margin-right: 1px;"></div>
-              <div class="b-line" style="width: 2px; margin-right: 2px;"></div>
-              <div class="b-line" style="width: 4px; margin-right: 1px;"></div>
-              <div class="b-line" style="width: 1px; margin-right: 3px;"></div>
-              <div class="b-line" style="width: 3px; margin-right: 2px;"></div>
-              <div class="b-line" style="width: 2px; margin-right: 1px;"></div>
-              <div class="b-line" style="width: 5px; margin-right: 3px;"></div>
-            </div>
-            
-            <div class="stub-info">
-              <div class="stub-ticket">${escapeHtml(pass.hallTicketNumber)}</div>
-              <div class="stub-sub">${escapeHtml(pass.branch)} | GUESTS: ${escapeHtml(pass.numberOfGuests)}</div>
-            </div>
-            
-            <div style="font-size: 8px; font-weight: bold; color: #94a3b8; text-transform: uppercase; font-family: Arial, sans-serif; margin-top: 10px;">
-              VITS SIGNATURE
-            </div>
+          <div class="section">
+            <div class="row"><span class="label">Reporting Time</span><span class="value">: ${escapeHtml(pass.reportingTime)}</span></div>
+            <div class="row"><span class="label">Venue</span><span class="value">: ${escapeHtml(pass.venue)}</span></div>
+            <div class="row"><span class="label">Guests Allowed</span><span class="value">: ${escapeHtml(pass.numberOfGuests)}</span></div>
           </div>
+          
+          <div class="signature">Principal Signature</div>
         </div>
         <script>
           window.addEventListener("load", () => {
