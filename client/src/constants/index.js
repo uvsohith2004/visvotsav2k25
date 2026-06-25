@@ -1,5 +1,4 @@
 import about from "./aboutData";
-import pricing from "./pricingData";
 import home from "./homeData";
 import socialLinks from "./socialLinks";
 import { scheduleData } from "./ScheduleData";
@@ -20,7 +19,6 @@ import {
 export {
   about,
   formSchema,
-  pricing,
   scheduleData,
   data,
   home,

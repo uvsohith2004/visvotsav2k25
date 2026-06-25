@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {  pricing, home, scheduleData } from "@/constants";
+import { home, scheduleData } from "@/constants";
 import GoogleMaps from "@/components/google-maps";
 import backgroundVideo from "@/assets/background.mp4";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,244 +13,12 @@ import { useInView } from "react-intersection-observer";
 import { Clock, Facebook, Instagram, Linkedin, MapPin, Twitter, Users, Phone, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AboutSection from "@/components/about-section";
-const EventCard = ({ event, index }) => {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({
-    threshold: 0.1,
-    triggerOnce: true,
-  });
-  // scroll to top when first render
+const MainPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-  
-  useEffect(() => {
-    if (inView) {
-      controls.start("visible");
-    }
-  }, [controls, inView]);
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        delay: index * 0.1,
-      },
-    },
-  };
-
-
- 
-
-  return (
-    <motion.div
-      ref={ref}
-      variants={cardVariants}
-      initial="hidden"
-      animate={controls}
-      className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-200 border border-gray-200"
-    >
-      {/* Header with category indicator */}
-      <div className={`bg-primary px-4 py-3`}>
-        <div className="flex justify-between items-center">
-          <h3 className="text-xl font-bold text-white">{event.title}</h3>
-          <span className="px-3 py-1 bg-white bg-opacity-20 rounded-full text-sm font-medium text-white capitalize">
-            {event.category}
-          </span>
-        </div>
-      </div>
-
-      {/* Event Details */}
-      <div className="p-4 space-y-3">
-        {/* Date and Time */}
-        <div className="flex items-center text-gray-700">
-          <Clock className="mr-2 h-4 w-4 text-blue-500" />
-          <div>
-            <p className="font-bold text-lg">{event.date}</p>
-            <p className="text-gray-600">{event.time}</p>
-          </div>
-        </div>
-
-        {/* Venue */}
-        <div className="flex items-center text-gray-700">
-          <MapPin className="mr-2 h-4 w-4 text-red-500" />
-          <p className="font-semibold">{event.venue}</p>
-        </div>
-
-        {/* Coordinators Section */}
-        {(event.coordinators?.faculty?.length > 0 || event.coordinators?.students?.length > 0) && (
-          <div className="mt-4 pt-3 border-t border-gray-200">
-            <div className="flex items-center mb-2">
-              <Users className="mr-2 h-4 w-4 text-green-500" />
-              <span className="font-semibold text-gray-700">Coordinators</span>
-            </div>
-
-            {/* Faculty Coordinators */}
-            {event.coordinators.faculty && event.coordinators.faculty.length > 0 && (
-              <div className="mb-2">
-                <p className="text-sm font-medium text-gray-600 mb-1">Faculty:</p>
-                <div className="space-y-1">
-                  {Array.isArray(event.coordinators.faculty) ? 
-                    event.coordinators.faculty.map((faculty, idx) => (
-                      <div key={idx} className="flex items-center text-sm text-gray-700">
-                        <User className="mr-1 h-3 w-3" />
-                        {typeof faculty === 'string' ? (
-                          <span>{faculty}</span>
-                        ) : (
-                          <div className="flex items-center space-x-2">
-                            <span>{faculty.name}</span>
-                            {faculty.mobile && (
-                              <div className="flex items-center text-blue-600">
-                                <Phone className="mr-1 h-3 w-3" />
-                                <span className="text-xs">{faculty.mobile}</span>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    )) : (
-                      <div className="flex items-center text-sm text-gray-700">
-                        <User className="mr-1 h-3 w-3" />
-                        <span>{event.coordinators.faculty}</span>
-                      </div>
-                    )
-                  }
-                </div>
-              </div>
-            )}
-
-            {/* Student Coordinators */}
-            {event.coordinators.students && event.coordinators.students.length > 0 && (
-              <div>
-                <p className="text-sm font-medium text-gray-600 mb-1">Students:</p>
-                <div className="space-y-1">
-                  {event.coordinators.students.map((student, idx) => (
-                    <div key={idx} className="flex items-center justify-between text-sm text-gray-700">
-                      <div className="flex items-center">
-                        <User className="mr-1 h-3 w-3" />
-                        <span>{student.name}</span>
-                      </div>
-                      {student.mobile && (
-                        <div className="flex items-center text-blue-600">
-                          <Phone className="mr-1 h-3 w-3" />
-                          <span className="text-xs">{student.mobile}</span>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    </motion.div>
-  );
-};
-
-const PricingCard = ({ item, index }) => {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({
-    threshold: 0.1,
-    triggerOnce: true,
-  });
-  useEffect(() => {
     document.title = `${home.event}  |  ${home.eventYear}`;
   }, []);
-  useEffect(() => {
-    if (inView) {
-      controls.start("visible");
-    }
-  }, [controls, inView]);
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        delay: index * 0.1,
-      },
-    },
-  };
-  return (
-    <motion.div
-      ref={ref}
-      variants={cardVariants}
-      initial="hidden"
-      animate={controls}
-      className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-200"
-    >
-      <div className="p-8 flex flex-col h-full">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold text-gray-900">{item.title}</h3>
-          <span className="text-3xl font-extrabold text-gray-900">
-            {item.price}
-          </span>
-        </div>
-        <div className="flex-1 flex flex-col">
-          <p className="text-gray-500 mb-6 flex-1 ">{item.description}</p>
-          <ul className="space-y-4 mb-6 ">
-            {item.details.map((detail) => (
-              <li key={detail.id} className="flex items-start">
-                <svg
-                  className="h-6 w-6 text-green-500 mr-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="text-gray-600">{detail.description}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <RouterLink
-          to="/register"
-          className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold py-3 px-4 rounded-full text-center hover:from-purple-600 hover:to-indigo-700 transition-all duration-300"
-        >
-          Register Now
-        </RouterLink>
-      </div>
-    </motion.div>
-  );
-};
-
-const MainPage = () => {
-  const [visibleCards, setVisibleCards] = useState(6);
-  const buttonRef = useRef(null);
-  const [visibleScheduleEvents, setVisibleScheduleEvents] = useState(6);
-  const scheduleButtonRef = useRef(null);
-
-  const showMoreScheduleEvents = () => {
-    setVisibleScheduleEvents((prev) => Math.min(prev + 6, scheduleData.length));
-  };
-
-  const showLessScheduleEvents = () => {
-    setVisibleScheduleEvents(6);
-    setTimeout(() => {
-      scheduleButtonRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, 100);
-  };
-  const showMore = () => {
-    setVisibleCards((prev) => Math.min(prev + 6, pricing.length));
-  };
-
-  const showLess = () => {
-    setVisibleCards(6);
-
-    buttonRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
   return (
     <div className="w-full ">
       <Element name="home">
@@ -386,107 +154,45 @@ const MainPage = () => {
       {/* schedule section */}
       <Element name="schedule" className="pt-3">
         <section
-        ref={scheduleButtonRef}
           id="schedule"
-          className="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8"
+          className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8"
         >
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-3">
-              Schedule & Details
-            </h2>
-            <h3 className="text-2xl text-center mb-1"><span className="font-bold text-red-900">14-09-2025</span> : Technical Events (State level competitions) </h3>
-            <h3 className="text-2xl text-center text-gray-900 mb-5"><span className="font-bold text-red-900">15-09-2025</span> : Culturals Events (Only For in-house Students)   </h3>
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              <AnimatePresence>
-                {scheduleData.slice(0, visibleScheduleEvents).map((event) => (
-                  <EventCard key={event.id} event={event} />
-                ))}
-              </AnimatePresence>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-10">
+              <h2 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl">
+                Schedule & Details
+              </h2>
+              <p className="mt-4 text-lg text-gray-500">
+                Graduation day schedule by branch
+              </p>
             </div>
-            {visibleScheduleEvents < scheduleData.length && (
-              <div className="mt-16 relative">
-                <div
-                  className="absolute inset-0 flex items-center"
-                  aria-hidden="true"
-                >
-                  <div className="w-full border-t border-gray-300" />
-                </div>
-                <div className="relative flex justify-center">
-                  <span className="px-2 bg-gray-100 text-sm text-gray-500">
-                    click on show more for more information
-                  </span>
-                </div>
+
+            <div className="bg-white shadow-xl rounded-2xl overflow-hidden border border-gray-100">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-gradient-to-r from-primary to-indigo-700 text-white">
+                      <th className="py-5 px-6 font-semibold uppercase tracking-wider text-sm">Branch</th>
+                      <th className="py-5 px-6 font-semibold uppercase tracking-wider text-sm">Graduation Date</th>
+                      <th className="py-5 px-6 font-semibold uppercase tracking-wider text-sm">Reporting Time</th>
+                      <th className="py-5 px-6 font-semibold uppercase tracking-wider text-sm">Venue</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {scheduleData.map((item) => (
+                      <tr 
+                        key={item.id} 
+                        className="hover:bg-indigo-50/30 transition-colors duration-150 group"
+                      >
+                        <td className="py-4 px-6 font-bold text-gray-900 group-hover:text-primary transition-colors text-base">{item.branch}</td>
+                        <td className="py-4 px-6 text-gray-600 font-medium text-base">{item.date}</td>
+                        <td className="py-4 px-6 text-gray-500 text-sm">{item.reportingTime}</td>
+                        <td className="py-4 px-6 text-gray-500 text-sm">{item.venue}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            )}
-            <div className="flex justify-center mt-8" >
-              {visibleScheduleEvents < scheduleData.length ? (
-                <Button
-                  onClick={showMoreScheduleEvents}
-                 className='rounded-full'
-                  size="lg"
-                >
-                  Show More 
-                </Button>
-              ) : (
-                visibleScheduleEvents > 6 && (
-                  <Button
-                    onClick={showLessScheduleEvents}
-                   className='rounded-full'
-                    size="lg"
-                  >
-                    Show Less 
-                  </Button>
-                )
-              )}
-            </div>
-          </div>
-        </section>
-      </Element>
-      {/* pricing section */}
-      <Element name="pricing">
-        <section
-          ref={buttonRef}
-          id="pricing"
-          className="bg-gradient-to-b from-violet-100 to-white py-20 px-4 sm:px-6 lg:px-8"
-        >
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-12">
-              Pricing
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <AnimatePresence>
-                {pricing.slice(0, visibleCards).map((item, index) => (
-                  <PricingCard key={item.id} item={item} />
-                ))}
-              </AnimatePresence>
-            </div>
-            {visibleCards < pricing.length && (
-              <div className="mt-16 relative">
-                <div
-                  className="absolute inset-0 flex items-center"
-                  aria-hidden="true"
-                >
-                  <div className="w-full border-t border-gray-300" />
-                </div>
-                <div className="relative flex justify-center">
-                  <span className="px-2 bg-white text-sm text-gray-500">
-                    Click on show more to view all events
-                  </span>
-                </div>
-              </div>
-            )}
-            <div className="flex justify-center mt-8">
-              {visibleCards < pricing.length ? (
-                <Button onClick={showMore}  className='rounded-full' size="lg">
-                  Show More
-                </Button>
-              ) : (
-                visibleCards > 6 && (
-                  <Button onClick={showLess}  className='rounded-full' size="lg">
-                    Show Less
-                  </Button>
-                )
-              )}
             </div>
           </div>
         </section>
