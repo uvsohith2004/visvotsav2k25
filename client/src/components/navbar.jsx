@@ -73,22 +73,6 @@ const Navbar = () => {
       animate={controls}
     >
       <div className="flex items-center">
-        <Link to="/" className="flex items-center">
-          <h2
-            className={cn(
-              "text-xl md:text-2xl font-bold transition-colors duration-300",
-              location.pathname === "/"
-                ? isTransparent
-                  ? "text-white"
-                  : "text-white"
-                : "text-black",
-              !isTransparent && "text-white"
-            )}
-          >
-            {navbar.title}
-            <span className="hidden sm:inline"> {navbar.year}</span>
-          </h2>
-        </Link>
       </div>
 
       <div className="flex items-center gap-3">

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { home, scheduleData } from "@/constants";
-import backgroundVideo from "@/assets/background.mp4";
+import graduationBg from "@/assets/graduation_bg.png";
 import posterImage from "@/assets/banner.jpeg";
 import { Element, Link } from "react-scroll";
 import {Link as RouterLink} from "react-router-dom"
@@ -9,7 +9,6 @@ import { useInView } from "react-intersection-observer";
 
 import { Clock, Facebook, Instagram, Linkedin, MapPin, Twitter, Users, Phone, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import AboutSection from "@/components/about-section";
 const MainPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -25,15 +24,11 @@ const MainPage = () => {
         >
           <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
 
-          <video
-            autoPlay
-            loop
-            muted
+          <img
+            src={graduationBg}
+            alt="Graduation Ceremony"
             className="absolute w-full h-full object-cover"
-          >
-            <source src={backgroundVideo} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          />
 
           <div className="container mx-auto px-4 z-20 text-center text-white">
             <p className="text-lg mb-2 font-light">{home.collegeName}</p>
@@ -43,7 +38,7 @@ const MainPage = () => {
 
             <div className="flex justify-center space-x-4 mb-12">
               <Link
-                to="about"
+                to="schedule"
                 smooth={true}
                 className="bg-primary hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105 cursor-pointer"
               >
@@ -109,41 +104,7 @@ const MainPage = () => {
           </div>
         </section>
       </Element>
-      <Element name="about" >
-        {/* <section
-          id="about"
-          className="flex bg-violet-900 w-full min-h-screen p-6 gap-2 shadow-lg"
-        >
-          <div className="flex flex-row justify-center items-center mx-auto my-auto gap-10 max-lg:flex-col">
-            <div className="flex-1  ">
-              <div className="flex max-xl:justify-center  mt-10 flex-col">
-                <h2 className="text-white font-bold text-4xl cursor-pointer ">
-                  {about.title}
-                </h2>
-                <p className="text-slate-300 text-lg max-w-[540px]">
-                  {about.description}
-                </p>
-              </div>
-              <div className="mt-10">
-                <h2 className="text-white font-bold text-4xl  cursor-pointer">
-                  {about.collegeName}
-                </h2>
-                <p className="text-slate-300 text-lg max-w-[540px]">
-                  {about.CollegeDescription}
-                </p>
-              </div>
-            </div>
-            <div className="flex-1 ">
-              <img
-                src={about.image}
-                alt={"sky"}
-                className="rounded-xl drop-shadow-lg"
-              />
-            </div>
-          </div>
-        </section> */}
-        <AboutSection />
-      </Element>
+
       {/* schedule section */}
       <Element name="schedule" className="pt-3">
         <section
