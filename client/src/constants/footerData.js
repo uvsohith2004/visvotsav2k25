@@ -6,7 +6,7 @@ export const footerData = {
   firstSubTitle: "Patrons",
   coPatronsSubTitle: "Co-Patrons",
   thirdTitle: "Loaction",
-  ThirdTitleAddress: "Udayagiri Road, Kavali, Nellore district, Andhra Pradesh",
+  ThirdTitleAddress: "KVR convention, Jammala palam, kavali, SPSR Nellore district, Andhra Pradesh",
   secondSubTitle: "Convenors",
   thirdSubTitle: "Co-conveners",
   fourthSubTitle: "Student Coordinators",

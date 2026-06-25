@@ -12,7 +12,7 @@ const homeData =  {
       eventDate: '4th-5th',
       suffix:'',
       downloadSize:"Poster",
-      eventAddress: 'UdayaGiri Road, Kavali, Nellore district'
+      eventAddress: 'KVR convention, Jammala palam, kavali, SPSR Nellore district'
     }
 
 export default homeData;

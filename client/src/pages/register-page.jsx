@@ -56,8 +56,8 @@ const graduationDatesByBranch = {
 };
 
 const guestOptions = ["0", "1", "2", "3", "4"];
-const reportingTime = "08:30 AM";
-const venue = "Auditorium";
+const reportingTime = "07:30 AM";
+const venue = "KVR Convention Hall";
 
 const graduationFormSchema = z.object({
   studentName: z

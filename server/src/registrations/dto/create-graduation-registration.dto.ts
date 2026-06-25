@@ -62,12 +62,12 @@ export class CreateGraduationRegistrationDto {
   @IsString()
   graduationDate: string;
 
-  @ApiProperty({ example: '08:30 AM' })
+  @ApiProperty({ example: '07:30 AM' })
   @IsString()
   @IsNotEmpty()
   reportingTime: string;
 
-  @ApiProperty({ example: 'Auditorium' })
+  @ApiProperty({ example: 'KVR Convention Hall' })
   @IsString()
   @IsNotEmpty()
   venue: string;
