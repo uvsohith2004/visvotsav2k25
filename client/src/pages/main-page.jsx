@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { home, scheduleData } from "@/constants";
-import GoogleMaps from "@/components/google-maps";
 import backgroundVideo from "@/assets/background.mp4";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import posterImage from "@/assets/banner.jpeg";
-import ContactForm from "@/components/contact-form";
 import { Element, Link } from "react-scroll";
 import {Link as RouterLink} from "react-router-dom"
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
@@ -191,41 +188,6 @@ const MainPage = () => {
               </div>
             </div>
           </div>
-        </section>
-      </Element>
-      {/* contact section */}
-      <Element name="contact" className="pt-5 pb-10">
-        <section 
-          id="contact"
-        className="w-full p-3  flex-col flex  mt-5 items-center">
-          <h2 className="text-foreground font-bold text-4xl mt-5 mb-10 cursor-pointer">
-            Contact
-          </h2>
-          <Tabs
-            defaultValue="contact-form"
-            className=" md:w-3/4 lg:w-1/2 w-full "
-          >
-            <TabsList className="grid w-full h-15 grid-cols-2 bg-gray-700/20 rounded-full ">
-              <TabsTrigger
-                value="contact-form"
-                className="rounded-full p-4 ml-1 my-1 "
-              >
-                Contact form
-              </TabsTrigger>
-              <TabsTrigger
-                value="google-maps"
-                className="rounded-full p-4 mr-1 my-1"
-              >
-                Google maps
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="contact-form">
-              <ContactForm />
-            </TabsContent>
-            <TabsContent value="google-maps">
-              <GoogleMaps />
-            </TabsContent>
-          </Tabs>
         </section>
       </Element>
     </div>
