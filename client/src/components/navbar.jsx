@@ -76,16 +76,18 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center gap-3">
-        {/* Register/Home Button */}
-        <Link
-          to={location.pathname === "/" ? "/register" : "/"}
-          className={cn(
-            buttonVariants({ variant: "default" }),
-            "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
-          )}
-        >
-          {location.pathname === "/" ? "Register" : "Home"}
-        </Link>
+        {/* Home Button (only if not on home page) */}
+        {location.pathname !== "/" && (
+          <Link
+            to="/"
+            className={cn(
+              buttonVariants({ variant: "default" }),
+              "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105"
+            )}
+          >
+            Home
+          </Link>
+        )}
 
         {/* Mobile Menu */}
         <Sheet
@@ -142,18 +144,20 @@ const Navbar = () => {
 
               <Separator className="my-4" />
 
-              {/* Register/Home Button */}
-              <SheetClose asChild>
-                <Link
-                  to={location.pathname === "/" ? "/register" : "/"}
-                  className={cn(
-                    buttonVariants({ variant: "default" }),
-                    "w-full py-3 rounded-lg font-medium"
-                  )}
-                >
-                  {location.pathname === "/" ? "Register Now" : "Back to Home"}
-                </Link>
-              </SheetClose>
+              {/* Home Button (only if not on home page) */}
+              {location.pathname !== "/" && (
+                <SheetClose asChild>
+                  <Link
+                    to="/"
+                    className={cn(
+                      buttonVariants({ variant: "default" }),
+                      "w-full py-3 rounded-lg font-medium"
+                    )}
+                  >
+                    Back to Home
+                  </Link>
+                </SheetClose>
+              )}
             </div>
           </SheetContent>
         </Sheet>

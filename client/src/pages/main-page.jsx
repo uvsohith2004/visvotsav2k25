@@ -37,18 +37,11 @@ const MainPage = () => {
             </h1>
 
             <div className="flex justify-center space-x-4 mb-12">
-              <Link
-                to="schedule"
-                smooth={true}
-                className="bg-primary hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105 cursor-pointer"
-              >
-                Know More
-              </Link>
               <RouterLink
                 to="/register"
                 className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105 cursor-pointer text-center flex items-center justify-center"
               >
-                Register Now
+                Generate Pass
               </RouterLink>
             </div>
 
