@@ -10,6 +10,7 @@ const graduationDatesByBranch: Record<string, string> = {
   CSE: '04-07-2026',
   'CSE-IOT': '04-07-2026',
   MBA: '04-07-2026',
+  EEE: '04-07-2026',
   ECE: '05-07-2026',
   CIVIL: '05-07-2026',
   'CSE-AIML': '05-07-2026',
